@@ -77,3 +77,39 @@ data.frame(x, f = dnorm(x)) |>
     geom_line(col = "blue") + 
     labs(y = "Probability Density") +
     theme_bw()
+
+# Monte Carlo Simulation ====
+
+# Monte Carlo simulation using normally distributed variables.
+# Using rnorm() function.
+
+avg <- mean(male_heights)
+sd <- sd(male_heights)
+n <- length(male_heights)
+
+simulated_heights <- rnorm(n, avg, sd)
+
+data.frame(x = simulated_heights) |> 
+  ggplot(aes(x = x)) +
+    geom_histogram(color = "black", 
+                   binwidth = 2) +
+    labs(y = "Frequency") + 
+    theme_bw()
+
+# How rare is that the tallest person is a seven footer?
+
+tallest <- replicate(10^5, {
+  simulated_data <- rnorm(n = 800, 
+                          mean = avg, 
+                          sd = sd)
+  max(simulated_data)
+})
+
+data.frame(x = tallest) %>% 
+  ggplot(aes(x = x)) + 
+    geom_histogram(color = "black", 
+                   binwidth = 1) + 
+    labs(y = "Frequency") + 
+    theme_bw()
+
+mean(tallest >= 7*12)
