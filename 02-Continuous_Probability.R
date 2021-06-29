@@ -113,3 +113,59 @@ data.frame(x = tallest) %>%
     theme_bw()
 
 mean(tallest >= 7*12)
+# Continuous Probability Assessment ====
+
+set.seed(16)
+act_scores <- rnorm(n = 10^4, mean = 20.9, sd = 5.7)
+
+# 1a
+mean(act_scores)
+# 1b
+sd(act_scores)
+# 1c
+ceiling((10^4)*pnorm(q = 36, 
+                     mean = 20.9, sd = 5.7, 
+                     lower.tail = FALSE))
+
+act_scores_sort <- sort(act_scores)
+head(act_scores_sort, 100)
+# 1d
+pnorm(q = 30, mean = 20.84012, sd = 5.675237, lower.tail = FALSE)
+# 1e
+pnorm(q = 10, mean = 20.84012, sd = 5.675237, lower.tail = TRUE)
+# 2
+x <- seq(1, 36)
+f_x <- dnorm(x, x = 20.9, sd = 5.7)
+
+data.frame(x, f_x) %>% 
+  ggplot(aes(x = x, 
+             y = f_x)) + 
+    geom_line() + 
+    theme_bw()
+# 3a
+act_scores_stand <- scale(act_scores)
+pnorm(q = 2, mean = 0, sd = 1, lower.tail = F)
+# 3b
+2*5.675237 + 20.84012
+# 3c
+qnorm(p = 0.975, mean = mean(act_scores), sd = sd(act_scores))
+# 4a
+x <- seq(1, 36)
+CDF <- function(a) mean(act_scores <= a)
+results <- sapply(x, CDF)
+names(results) <- x
+which(results >= 0.95)[1]
+# 4b
+qnorm(p = 0.95, mean = 20.9, sd = 5.7)
+# 4c
+p <- seq(0.01, 0.99, 0.01)
+sample_quantiles <- quantile(x = act_scores, p)
+# 4d
+theoretical_quantiles <- qnorm(p, mean = 20.9, sd = 5.7)
+
+ggplot(data = NULL, 
+       mapping = aes(x = theoretical_quantiles, 
+                     y = sample_quantiles)) + 
+  geom_point() +
+  geom_abline() + 
+  theme_bw()
