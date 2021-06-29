@@ -52,3 +52,18 @@ Fun_Diff_2 <- function(i) {
 }
 
 map_dbl(.x = 1:3, .f = Fun_Diff_2)
+
+# 
+# Probability Density ====
+
+# For continuous distributions, the probability of a single values is not defined.
+
+pnorm(q = 76, # CDF
+      mean = mean(male_heights), 
+      sd = sd(male_heights), 
+      lower.tail = T)
+
+
+dnorm(x = 76, # DDF
+      mean = mean(male_heights), 
+      sd = sd(male_heights))
