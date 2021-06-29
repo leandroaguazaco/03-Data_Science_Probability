@@ -64,6 +64,16 @@ pnorm(q = 76, # CDF
       lower.tail = T)
 
 
-dnorm(x = 76, # DDF
+dnorm(x = 76, # PDF
       mean = mean(male_heights), 
       sd = sd(male_heights))
+
+# Plotting de PDF, probability density function
+
+x <- seq(-4, 4, length = 100)
+data.frame(x, f = dnorm(x)) |> 
+  ggplot(mapping = aes(x = x, 
+                       y = f)) +
+    geom_line(col = "blue") + 
+    labs(y = "Probability Density") +
+    theme_bw()
