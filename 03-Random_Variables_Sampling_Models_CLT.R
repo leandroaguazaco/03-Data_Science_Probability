@@ -67,3 +67,12 @@ ggplot(data = NULL,
 
 # The average of many draws of a random variable is called its expected value.
 # The standard deviation of many draws of a random variable is called its standard error.
+# Distributions versus Probability Distributions ====
+
+# Any list of numbers has a distribution. The probability distributions function of a random variable
+# is defined mathematically and does not depend on a list of numbers.
+# Central Limit Theorem ====
+
+# CTL: when the number of draws is large (sample size), the sum of independent draws 
+# is approximately normal.
+
