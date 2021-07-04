@@ -76,3 +76,53 @@ ggplot(data = NULL,
 # CTL: when the number of draws is large (sample size), the sum of independent draws 
 # is approximately normal.
 
+# Assessment ====
+
+# 1f
+set.seed(21)
+
+S <- replicate(n = 10^4, {
+  X <- sample(x = c(1, -0.25), size = 1, prob = c(0.2, 0.8))
+})
+
+pnorm(q = 8, 
+      mean = mean(S), 
+      sd = sd(S)*sqrt(44), 
+      lower.tail = FALSE)
+
+# 2b
+library(dplyr)
+
+p <- seq(0.25, 0.95, 0.05)
+p_1 <- 1 - p
+
+
+data.frame(p, p_1) %>% 
+  mutate(mu = 44 * p,
+         se = sqrt(44) * sqrt(p*p_1), 
+         prob = pnorm(35, mean = mu, sd = se, lower.tail = FALSE))
+
+# 3a Expected value
+p <- 5/38
+6*p + (-1*(1 - p))
+
+# 3b Standard error
+abs(6-(-1)) * sqrt(p*(1-p))
+
+# 3c Expected value of the average
+6*p + (-1*(1 - p))
+
+# 3d Standard error of the average
+sd(sample(c(6, -1), 
+          size = 500, 
+          replace = TRUE, 
+          prob = c(p, 1 - p)))/sqrt(500)
+
+# 3e Expected value of the sum
+(6*p + (-1*(1 - p)))*500
+
+# 3f Standard error of the sum
+sqrt(500) * (abs(6-(-1)) * sqrt(p*(1-p)))
+
+# 3g
+pnorm(q = 0, mean = -39.47368, sd = 52.91045, lower.tail = TRUE)
